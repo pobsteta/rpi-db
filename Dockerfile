@@ -30,7 +30,8 @@ RUN set -x \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
-	&& gosu nobody true
+	&& gosu nobody true \
+	&& apt-get purge -y --auto-remove ca-certificates
 
 # On met la locale à "fr_FR.UTF-8" pour que Postgres soit en français par défaut
 RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
