@@ -39,7 +39,6 @@ ENV POSTGIS_MAJOR 2.2
 
 RUN apt-get update \
 	&& apt-get install -y postgresql-common \
-	&& sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf \
 	&& apt-get install -y \
 		postgresql-$PG_MAJOR \
 		postgresql-contrib-$PG_MAJOR \
