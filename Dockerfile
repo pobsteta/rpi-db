@@ -1,8 +1,8 @@
 # PostgreSQL stack
 #
 # This image includes the following tools
-# - PostgreSQL 9.5
-# - Postgis 2.2
+# - PostgreSQL 9.4
+# - Postgis 2.1
 # - SIME 2.8
 #
 # Version 1.0
