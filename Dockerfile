@@ -34,8 +34,8 @@ RUN set -x \
 	&& apt-get purge -y --auto-remove ca-certificates
 
 # Les versions de PostgreSQL/Postgis à installer
-ENV PG_MAJOR 9.5
-ENV POSTGIS_MAJOR 2.2
+ENV PG_MAJOR 9.4
+ENV POSTGIS_MAJOR 2.1
 
 RUN apt-get update \
 	&& apt-get install -y \
