@@ -42,9 +42,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update \
-	&& apt-get install -y postgresql-common \
 	&& apt-get install -y \
-		postgresql-$PG_MAJOR \
 		postgresql-contrib-$PG_MAJOR \
 		postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
         postgis \
