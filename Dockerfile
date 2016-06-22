@@ -1,8 +1,8 @@
 # PostgreSQL stack
 #
 # This image includes the following tools
-# - PostgreSQL 9.4
-# - Postgis 2.1
+# - PostgreSQL 9.5
+# - Postgis 2.2
 # - SIME 2.8
 #
 # Version 1.0
@@ -22,7 +22,7 @@ RUN groupadd -r postgres --gid=999 && useradd -r -g postgres --uid=999 postgres
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
 RUN set -x \
-	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates wget rpl pwgen && rm -rf /var/lib/apt/lists/* \
+	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates wget && rm -rf /var/lib/apt/lists/* \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
 	&& export GNUPGHOME="$(mktemp -d)" \
@@ -30,21 +30,36 @@ RUN set -x \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
-	&& gosu nobody true
+	&& gosu nobody true \
+	&& apt-get purge -y --auto-remove ca-certificates
+
+# On met la locale à "fr_FR.UTF-8" pour que Postgres soit en français par défaut
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+	&& localedef -i fr_FR -c -f UTF-8 -A /usr/share/locale/locale.alias fr_FR.UTF-8
+ENV LANG fr_FR.utf8
 
 # Les versions de PostgreSQL/Postgis à installer
-ENV PG_MAJOR 9.4
-ENV POSTGIS_MAJOR 2.1
+ENV PG_MAJOR 9.5
+ENV POSTGIS_MAJOR 2.2
+
+# on ajoute le dépôt Postgres
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main $PG_MAJOR" > /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update \
+	&& apt-get install -y postgresql-common \
+	&& sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf \
 	&& apt-get install -y \
+		postgresql-$PG_MAJOR \
 		postgresql-contrib-$PG_MAJOR \
 		postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
         postgis \
 	&& rm -rf /var/lib/apt/lists/*
 
 # On met les fichiers de configuration de Postgres en place
-ADD postgres.conf /etc/supervisor/conf.d/postgres.conf
+RUN mv -v /usr/share/postgresql/$PG_MAJOR/postgresql.conf.sample /usr/share/postgresql/ \
+	&& ln -sv ../postgresql.conf.sample /usr/share/postgresql/$PG_MAJOR/ \
+	&& sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/share/postgresql/postgresql.conf.sample
 
 RUN mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql
 
@@ -73,8 +88,7 @@ ENTRYPOINT ["/init-pg.sh"]
 
 EXPOSE 5432
 
-CMD /init-pg.sh
-#CMD ["postgres"]
+CMD ["postgres"]
 
 # ---------- FIN --------------
 #
