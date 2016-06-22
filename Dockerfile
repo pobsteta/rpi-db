@@ -8,7 +8,7 @@
 # Version 1.0
 
 # Image de base ubuntu modifiée
-FROM resin/rpi-raspbian:wheezy
+FROM resin/rpi-raspbian
 MAINTAINER Pascal Obstetar <pascal.obstetar@bioecoforests.com>
 
 # ---------- DEBUT --------------
@@ -39,8 +39,8 @@ ENV POSTGIS_MAJOR 2.1
 
 RUN apt-get update \
 	&& apt-get install -y \
-		postgresql-contrib-9.4 \
-		postgresql-9.4-postgis-2.1 \
+		postgresql-contrib-$PG_MAJOR \
+		postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
         postgis \
 	&& rm -rf /var/lib/apt/lists/*
 
