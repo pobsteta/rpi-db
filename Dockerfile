@@ -38,8 +38,8 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
 ENV LANG fr_FR.utf8
 
 # Les versions de PostgreSQL/Postgis à installer
-ENV PG_MAJOR 9.4
-ENV POSTGIS_MAJOR 2.1
+ENV PG_MAJOR 9.5
+ENV POSTGIS_MAJOR 2.2
 
 # on ajoute le dépôt Postgres
 #RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
