@@ -42,8 +42,8 @@ ENV PG_MAJOR 9.5
 ENV POSTGIS_MAJOR 2.2
 
 # on ajoute le dépôt Postgres
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
 RUN apt-get update \
 	&& apt-get install -y postgresql-common \
