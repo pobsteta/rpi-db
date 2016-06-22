@@ -42,10 +42,6 @@ ENV LANG fr_FR.utf8
 ENV PG_MAJOR 9.5
 ENV POSTGIS_MAJOR 2.2
 
-# on ajoute le dépôt Postgres
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main $PG_MAJOR" > /etc/apt/sources.list.d/pgdg.list
-
 RUN apt-get update \
 	&& apt-get install -y postgresql-common \
 	&& sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf \
@@ -57,9 +53,7 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 # On met les fichiers de configuration de Postgres en place
-RUN mv -v /usr/share/postgresql/$PG_MAJOR/postgresql.conf.sample /usr/share/postgresql/ \
-	&& ln -sv ../postgresql.conf.sample /usr/share/postgresql/$PG_MAJOR/ \
-	&& sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/share/postgresql/postgresql.conf.sample
+ADD postgres.conf /etc/supervisor/conf.d/postgres.conf
 
 RUN mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql
 
