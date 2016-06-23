@@ -49,7 +49,6 @@ RUN apt-get update \
 		postgresql-$PG_MAJOR \
 		postgresql-contrib-$PG_MAJOR \
 		postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
-        postgis \
 	&& rm -rf /var/lib/apt/lists/*
 
 # On met les fichiers de configuration de Postgres en place
