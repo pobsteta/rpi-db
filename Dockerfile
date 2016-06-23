@@ -38,37 +38,8 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
 ENV LANG fr_FR.utf8
 
 # Les versions de PostgreSQL/Postgis à installer
-ENV PG_MAJOR 9.5
-ENV POSTGIS_MAJOR 2.2
-
-# on ajoute le dépôt Postgres
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main $PG_MAJOR" > /etc/apt/sources.list.d/pgdg.list
-
-# ----------- On compile Postgres ------------------------
-RUN apt-get update && apt-get upgrade && apt-get install build-essential fakeroot \
-    && apt-get build-dep postgresql-$PG_MAJOR \
-    && apt-get build-dep postgresql-common \
-    && apt-get build-dep postgresql-client-common \
-    && apt-get build-dep postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
-    && apt-get build-dep postgis \
-    && apt-get build-dep pgdg-keyring
-    
-RUN cd /tmp \
-    && apt-get source --compile postgresql-$PG_MAJOR
-    && apt-get source --compile postgresql-common
-    && apt-get source --compile postgresql-client-common
-    && apt-get source postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
-    && apt-get source postgis \
-    && apt-get source --compile pgdg-keyring
-    
-RUN  mkdir /var/local/repository \
-    && echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list \
-    && cd /var/local/repository \
-    && mv /tmp/*.deb . \
-    && dpkg-scanpackages ./ | sudo tee Packages > /dev/null && sudo gzip -f Packages \
-
-# ----------Fin compile------------------------------------
+ENV PG_MAJOR 9.4
+ENV POSTGIS_MAJOR 2.1
 
 # On installe Postgres
 RUN apt-get update \
