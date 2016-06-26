@@ -44,7 +44,7 @@ ENV POSTGIS_MAJOR 2.2
 # Créer un dépôt local
 RUN sudo mkdir /var/local/repository \
     && cd /var/local/repository
-RUN sudo wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://obooqo.eu/public/files/files/97f3ad265b11d117c9ec13927801560c/attach/postgresql-9.5.3-raspbian.tar.gz
+RUN sudo wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea029731ef/attach/postgresql-9.5.3-raspbian.tar.gz
 RUN sudo tar -zxvf postgresql-9.5.3-raspbian.tar.gz
 RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
 
