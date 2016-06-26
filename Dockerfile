@@ -33,7 +33,7 @@ RUN set -x \
 	&& gosu nobody true
 
 # On met la locale à "fr_FR.UTF-8" pour que Postgres soit en français par défaut
-RUN apt-get update && apt-get upgrade && apt-get install -y locales apt-utils && rm -rf /var/lib/apt/lists/* \
+RUN apt-get update && apt-get upgrade && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
 	&& localedef -i fr_FR -c -f UTF-8 fr_FR.UTF-8
 ENV LANG fr_FR.utf8
 
@@ -44,7 +44,7 @@ ENV POSTGIS_MAJOR 2.2
 # Créer un dépôt local
 RUN sudo mkdir /var/local/repository \
     && cd /var/local/repository
-RUN sudo wget -O postgresql-9.5.3-raspbian.tar.gz https://obooqo.eu/apps/files/files//download/postgresql-9.5.3-raspbian.tar.gz
+RUN sudo wget https://github.com/pobsteta/rpi-db.git -O postgresql-9.5.3-raspbian.tar.gz https://obooqo.eu/apps/files/files//download/postgresql-9.5.3-raspbian.tar.gz
 RUN sudo tar -xvzf postgresql-9.5.3-raspbian.tar.gz
 RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
 
