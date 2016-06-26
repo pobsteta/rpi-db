@@ -7,7 +7,7 @@
 #
 # Version 1.0
 
-# Image de base ubuntu modifiée
+# Image de base resin/rpi-paspbian modifiée
 FROM resin/rpi-raspbian
 MAINTAINER Pascal Obstetar <pascal.obstetar@bioecoforests.com>
 
@@ -42,11 +42,11 @@ ENV PG_MAJOR 9.5
 ENV POSTGIS_MAJOR 2.2
 
 # Créer un dépôt local
-sudo mkdir /var/local/repository
-cd /var/local/repository
-sudo wget -O postgresql-9.5.3-raspbian.tar.gz https://obooqo.eu/apps/files/files//download/postgresql-9.5.3-raspbian.tar.gz
-sudo tar -xvzf postgresql-9.5.3-raspbian.tar.gz
-echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
+RUN sudo mkdir /var/local/repository \
+    && cd /var/local/repository
+RUN sudo wget -O postgresql-9.5.3-raspbian.tar.gz https://obooqo.eu/apps/files/files//download/postgresql-9.5.3-raspbian.tar.gz
+RUN sudo tar -xvzf postgresql-9.5.3-raspbian.tar.gz
+RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
 
 # On installe Postgres
 RUN apt-get update \
