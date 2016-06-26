@@ -33,7 +33,7 @@ RUN set -x \
 	&& gosu nobody true
 
 # On met la locale à "fr_FR.UTF-8" pour que Postgres soit en français par défaut
-RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+RUN apt-get update && apt-get upgrade && apt-get install -y locales apt-utils && rm -rf /var/lib/apt/lists/* \
 	&& localedef -i fr_FR -c -f UTF-8 fr_FR.UTF-8
 ENV LANG fr_FR.utf8
 
