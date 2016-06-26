@@ -1,8 +1,8 @@
 # PostgreSQL stack
 #
 # This image includes the following tools
-# - PostgreSQL 9.4
-# - Postgis 2.1
+# - PostgreSQL 9.5
+# - Postgis 2.2
 # - SIME 2.8
 #
 # Version 1.0
@@ -38,8 +38,15 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
 ENV LANG fr_FR.utf8
 
 # Les versions de PostgreSQL/Postgis à installer
-ENV PG_MAJOR 9.4
-ENV POSTGIS_MAJOR 2.1
+ENV PG_MAJOR 9.5
+ENV POSTGIS_MAJOR 2.2
+
+# Créer un dépôt local
+sudo mkdir /var/local/repository
+cd /var/local/repository
+sudo wget -O postgresql-9.5.3-raspbian.tar.gz https://obooqo.eu/apps/files/files//download/postgresql-9.5.3-raspbian.tar.gz
+sudo tar -xvzf postgresql-9.5.3-raspbian.tar.gz
+echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
 
 # On installe Postgres
 RUN apt-get update \
@@ -47,8 +54,7 @@ RUN apt-get update \
 	&& sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf \
 	&& apt-get install -y \
 		postgresql-$PG_MAJOR \
-		postgresql-contrib-$PG_MAJOR \
-		postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
+		postgresql-contrib-$PG_MAJOR
 	&& rm -rf /var/lib/apt/lists/*
 
 # On met les fichiers de configuration de Postgres en place
