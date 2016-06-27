@@ -47,7 +47,7 @@ RUN mkdir /var/local/repository \
 RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea02974c56/attach/postgresql-9.5.3-raspbian.tar.gz
 RUN tar -zxvf postgresql-9.5.3-raspbian.tar.gz
 RUN apt-get update
-RUN dpkg -i postgresql_$PG_MAJOR+175.pgdg80+1_all.deb
+RUN dpkg -i postgresql-9.5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgis_$POSTGIS_MAJOR.0-1_armhf
 
 # On installe Postgres
