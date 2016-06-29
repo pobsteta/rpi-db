@@ -19,6 +19,12 @@ ENV DEBIAN_FRONTEND noninteractive
 # On explicite user/group IDs
 RUN groupadd -r postgres --gid=999 && useradd -r -g postgres --uid=999 postgres
 
+# Ajouter les dépôts pg
+RUN echo "deb-src http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+
+# Ajouter la clef du dépôt
+RUN wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
 RUN set -x \
@@ -41,17 +47,11 @@ ENV LANG fr_FR.utf8
 ENV PG_MAJOR 9.5
 ENV POSTGIS_MAJOR 2.2
 
-# Ajouter les dépôts pg
-RUN echo "deb-src http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
-
-# Ajouter la clef du dépôt
-RUN wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-
 # Créer un dépôt local
 RUN mkdir /var/local/repository \
     && cd /var/local/repository
 RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea029830b2/attach/postgresql-9.5.3-raspbian.tar.gz
-RUN tar -zxvf postgresql-9.5.3-raspbian.tar.gz
+RUN tar -xvzf postgresql-9.5.3-raspbian.tar.gz
 RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
 RUN apt-get update
 RUN apt-get install postgresql-9.5 postgis-2.2
