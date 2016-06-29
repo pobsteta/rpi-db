@@ -53,10 +53,14 @@ RUN mkdir /var/local/repository \
     && cd /var/local/repository
 RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea029830b2/attach/postgresql-9.5.3-raspbian.tar.gz
 RUN tar -xvzf postgresql-9.5.3-raspbian.tar.gz
-#RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
-#RUN dpkg-scanpackages ./ | sudo tee Packages > /dev/null && sudo gzip -f Packages
+
+# On met à jour
 RUN apt-get update
+
+# On installe les dépendances nécessaires à Postgres et Postgis
 RUN apt-get install -y libssl-dev krb5-multidev comerr-dev libgssapi-krb5-2 libldap-2.4-2 dctrl-tools iproute2 net-tools lsb-release libxml2 ssl-cert netbase ucf libedit2
+
+# On installe Postgres et Postgis
 RUN dpkg -i libpq5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq-dev_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i pgdg-keyring_2014.1_all.deb
@@ -66,14 +70,9 @@ RUN dpkg -i postgresql-client-9.5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgresql-9.5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgis_2.2.0-1_armhf.deb
 
-# On installe Postgres
-RUN apt-get update \
-	&& apt-get install -y postgresql-common \
-	&& sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf \
-	&& apt-get install -y \
-		postgresql-$PG_MAJOR \
-		postgresql-contrib-$PG_MAJOR
-	&& rm -rf /var/lib/apt/lists/*
+# On paramètre Postgres
+RUN sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf \
+    && rm -rf /var/lib/apt/lists/*
 
 # On met les fichiers de configuration de Postgres en place
 RUN mv -v /usr/share/postgresql/$PG_MAJOR/postgresql.conf.sample /usr/share/postgresql/ \
