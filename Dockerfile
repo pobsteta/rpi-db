@@ -22,7 +22,8 @@ RUN groupadd -r postgres --gid=999 && useradd -r -g postgres --uid=999 postgres
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
 RUN set -x \
-	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates wget rpl pwgen && rm -rf /var/lib/apt/lists/* \
+	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates wget rpl pwgen build-essential fakeroot \
+	&& rm -rf /var/lib/apt/lists/* \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
 	&& export GNUPGHOME="$(mktemp -d)" \
@@ -53,8 +54,9 @@ RUN mkdir /var/local/repository \
 RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea029830b2/attach/postgresql-9.5.3-raspbian.tar.gz
 RUN tar -xvzf postgresql-9.5.3-raspbian.tar.gz
 RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
+RUN dpkg-scanpackages ./ | sudo tee Packages > /dev/null && sudo gzip -f Packages
 RUN apt-get update
-RUN apt-get install postgresql-9.5 postgis-2.2
+RUN apt-get install postgresql-9.5 postgis
 
 # On installe Postgres
 RUN apt-get update \
