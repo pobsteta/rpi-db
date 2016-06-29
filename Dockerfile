@@ -59,6 +59,7 @@ RUN apt-get update
 RUN apt-get install -y libssl-dev krb5-multidev comerr-dev libgssapi-krb5-2 libldap-2.4-2 dctrl-tools iproute2 net-tools lsb-release libxml2 ssl-cert
 RUN dpkg -i libpq5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq-dev_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i postgresql-client-common_175.pgdg80+1_all.deb
 RUN dpkg -i postgresql-common_175.pgdg80+1_all.deb
 RUN dpkg -i postgresql-client-9.5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgresql-9.5_9.5.3-1.pgdg80+1_armhf.deb
