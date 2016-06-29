@@ -56,7 +56,7 @@ RUN tar -xvzf postgresql-9.5.3-raspbian.tar.gz
 #RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
 #RUN dpkg-scanpackages ./ | sudo tee Packages > /dev/null && sudo gzip -f Packages
 RUN apt-get update
-RUN apt-get install -y libssl-dev krb5-multidev comerr-dev libgssapi-krb5-2 libldap-2.4-2 dctrl-tools iproute2 net-tools lsb-release libxml2 ssl-cert
+RUN apt-get install -y libssl-dev krb5-multidev comerr-dev libgssapi-krb5-2 libldap-2.4-2 dctrl-tools iproute2 net-tools lsb-release libxml2 ssl-cert netbase pgdg-keyring
 RUN dpkg -i libpq5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq-dev_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgresql-client-common_175.pgdg80+1_all.deb
