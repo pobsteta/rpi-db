@@ -41,6 +41,12 @@ ENV LANG fr_FR.utf8
 ENV PG_MAJOR 9.5
 ENV POSTGIS_MAJOR 2.2
 
+# Ajouter les dépôts pg
+RUN echo "deb-src http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+
+# Ajouter la clef du dépôt
+RUN wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
 # Créer un dépôt local
 RUN mkdir /var/local/repository \
     && cd /var/local/repository
@@ -48,7 +54,7 @@ RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pasc
 RUN tar -zxvf postgresql-9.5.3-raspbian.tar.gz
 RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
 RUN apt-get update
-RUN apt-get install postgresql-9.5
+RUN apt-get install postgresql-9.5 postgis-2.2
 
 # On installe Postgres
 RUN apt-get update \
