@@ -53,10 +53,11 @@ RUN mkdir /var/local/repository \
     && cd /var/local/repository
 RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea029830b2/attach/postgresql-9.5.3-raspbian.tar.gz
 RUN tar -xvzf postgresql-9.5.3-raspbian.tar.gz
-RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
-RUN dpkg-scanpackages ./ | sudo tee Packages > /dev/null && sudo gzip -f Packages
+#RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
+#RUN dpkg-scanpackages ./ | sudo tee Packages > /dev/null && sudo gzip -f Packages
 RUN apt-get update
-RUN apt-get install postgresql-9.5 postgis
+RUN dpkg -i postgresql-server-dev-9.5_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i postgis_2.2.0-1_armhf.deb
 
 # On installe Postgres
 RUN apt-get update \
