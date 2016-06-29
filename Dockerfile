@@ -59,6 +59,9 @@ RUN apt-get update
 RUN apt-get install -y libssl-dev krb5-multidev comerr-dev libgssapi-krb5-2 libldap-2.4-2
 RUN dpkg -i libpq5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq-dev_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i postgresql_9.5+175.pgdg80+1_armhf.deb
+RUN dpkg -i postgresql-common_175.pgdg80+1_armhf.deb
+RUN dpkg -i postgresql-contrib-9.5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgresql-server-dev-9.5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgis_2.2.0-1_armhf.deb
 
