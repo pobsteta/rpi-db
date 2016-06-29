@@ -23,7 +23,7 @@ RUN groupadd -r postgres --gid=999 && useradd -r -g postgres --uid=999 postgres
 RUN echo "deb-src http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
 
 # Ajoute wget
-RUN apt-get install -y --no-install-recommends wget
+RUN set -x && apt-get update && apt-get install -y --no-install-recommends wget
 
 # Ajouter la clef du dépôt
 RUN wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
