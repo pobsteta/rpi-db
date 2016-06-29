@@ -50,7 +50,7 @@ RUN wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key
 # Créer un dépôt local
 RUN mkdir /var/local/repository \
     && cd /var/local/repository
-RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea02974c56/attach/postgresql-9.5.3-raspbian.tar.gz
+RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea029830b2/attach/postgresql-9.5.3-raspbian.tar.gz
 RUN tar -zxvf postgresql-9.5.3-raspbian.tar.gz
 RUN echo "deb [ trusted=yes ] file:///var/local/repository ./" | sudo tee /etc/apt/sources.list.d/my_own_repo.list
 RUN apt-get update
