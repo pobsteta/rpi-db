@@ -22,13 +22,16 @@ RUN groupadd -r postgres --gid=999 && useradd -r -g postgres --uid=999 postgres
 # Ajouter les dépôts pg
 RUN echo "deb-src http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
 
+# Ajoute wget
+RUN apt-get install -y --no-install-recommends wget
+
 # Ajouter la clef du dépôt
 RUN wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
 RUN set -x \
-	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates wget rpl pwgen && rm -rf /var/lib/apt/lists/* \
+	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates rpl pwgen && rm -rf /var/lib/apt/lists/* \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
 	&& export GNUPGHOME="$(mktemp -d)" \
