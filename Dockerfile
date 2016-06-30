@@ -68,10 +68,10 @@ RUN dpkg -i gdal-stable_4.8-1_armhf.deb
 RUN dpkg -i geos_3.5.0-1_armhf.deb
 RUN dpkg -i proj4_4.8-1_armhf.deb
 RUN dpkg -i sfcgal_20160628-1_armhf.deb
+RUN dpkg -i libpgtypes3_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libecpg6_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libecpg-compat3_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libecpg-dev_9.5.3-1.pgdg80+1_armhf.deb
-RUN dpkg -i libpgtypes3_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq-dev_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq5_9.5.3-1.pgdg80+1_armhf.deb
