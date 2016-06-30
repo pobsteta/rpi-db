@@ -68,6 +68,12 @@ RUN dpkg -i gdal-stable_4.8-1_armhf.deb
 RUN dpkg -i geos_3.5.0-1_armhf.deb
 RUN dpkg -i proj4_4.8-1_armhf.deb
 RUN dpkg -i sfcgal_20160628-1_armhf.deb
+RUN dpkg -i libecpg6_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i libecpg-compat3_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i libecpg-dev_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i libpgtypes3_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i libpq5_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i libpq-dev_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i libpq-dev_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i pgdg-keyring_2014.1_all.deb
@@ -75,6 +81,7 @@ RUN dpkg -i postgresql-client-common_175.pgdg80+1_all.deb
 RUN dpkg -i postgresql-common_175.pgdg80+1_all.deb
 RUN dpkg -i postgresql-client-9.5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgresql-9.5_9.5.3-1.pgdg80+1_armhf.deb
+RUN dpkg -i postgresql-contrib-9.5_9.5.3-1.pgdg80+1_armhf.deb
 RUN dpkg -i postgis_2.2.0-1_armhf.deb
 
 # On paramètre Postgres
