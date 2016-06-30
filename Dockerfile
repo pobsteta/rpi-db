@@ -51,13 +51,15 @@ ENV POSTGIS_MAJOR 2.2
 # Créer un dépôt local
 RUN mkdir /var/local/repository \
     && cd /var/local/repository
-RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea029830b2/attach/postgresql-9.5.3-raspbian.tar.gz
+RUN wget --no-check-certificate -O postgresql-9.5.3-raspbian.tar.gz https://pascalobstetar.cozycloud.cc/public/files/files/1b56144d036da9fa913c41ea02985654/attach/postgresql-9.5.3-raspbian.tar.gz
 RUN tar -xvzf postgresql-9.5.3-raspbian.tar.gz
 
 # On met à jour
 RUN apt-get update
 
 # On installe les dépendances nécessaires à Postgres et Postgis
+RUN apt-get install -y autoconf build-essential cmake docbook-mathml docbook-xsl libboost-dev libboost-thread-dev libboost-filesystem-dev libboost-system-dev libboost-iostreams-dev libboost-program-options-dev libboost-timer-dev libcunit1-dev libgdal-dev libgeos++-dev libgeotiff-dev libgmp-dev libjson0-dev libjson-c-dev liblas-dev libmpfr-dev libopenscenegraph-dev libpq-dev libproj-dev libxml2-dev xsltproc build-essential 
+
 RUN apt-get install -y libssl-dev krb5-multidev comerr-dev libgssapi-krb5-2 libldap-2.4-2 dctrl-tools iproute2 net-tools lsb-release libxml2 ssl-cert netbase ucf libedit2
 
 # On installe Postgres et Postgis
